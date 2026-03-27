@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>To-Do Tracker</h2>
+
+<input id="task" placeholder="Task name">
+
+<select id="category">
+  <option>Academic</option>
+  <option>Personal</option>
+</select>
+
+<input id="count" type="number" placeholder="Number of tasks">
+
+<button onclick="addTask()">Add</button>
+
+<hr>
+
+<ul id="list"></ul>
+
+<h3>Progress</h3>
+<div id="bar">
+  <div id="progress"></div>
+</div>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function addTask() {
+  let name = task.value;
+  let cat = category.value;
+  let countNum = count.value;
+
+  for (let i = 1; i <= countNum; i++) {
+    tasks.push({
+      title: name + " " + i,
+      category: cat,
+      done: false
+    });
+  }
+
+  save();
+}
+
+function toggle(i) {
+  tasks[i].done = !tasks[i].done;
+  save();
+}
+
+function remove(i) {
+  tasks.splice(i, 1);
+  save();
+}
+
+function save() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  load();
+}
+
+function load() {
+  list.innerHTML = "";
+
+  let done = 0;
+
+  tasks.forEach((t, i) => {
+    if (t.done) done++;
+
+    list.innerHTML += `
+      <li>
+        ${t.title} (${t.category})
+        <button onclick="toggle(${i})">
+          ${t.done ? "🟢" : "🔴"}
+        </button>
+        <button onclick="remove(${i})">❌</button>
+      </li>
+    `;
+  });
+
+  let percent = tasks.length ? (done / tasks.length) * 100 : 0;
+  progress.style.width = percent + "%";
+}
+
+load();
+</script>
+
+</body>
+</html>

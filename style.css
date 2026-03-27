@@ -1,0 +1,22 @@
+body {
+  font-family: Arial;
+  text-align: center;
+}
+
+input, select, button {
+  padding: 8px;
+  margin: 5px;
+}
+
+#bar {
+  width: 80%;
+  height: 20px;
+  background: lightgray;
+  margin: auto;
+}
+
+#progress {
+  height: 100%;
+  width: 0%;
+  background: green;
+}
